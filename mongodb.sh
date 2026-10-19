@@ -1,50 +1,46 @@
 #!/bin/bash
 
 user_id=$(id -u)
+logs_folder="/var/log/roboshop"
+logs_file="${logs_folder}/${0}.log"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-logs_folder="/var/log/roboshop"
-log_file="${log_folder}/$0"
 
-#checking user is having sudo access
 if [ $user_id -ne 0 ]; then
-   echo "user $USER is not having sudo access"
-   exit 1
+    echo "Please run this script with sudo access.."
+    exit 1
 fi
 
 mkdir -p $logs_folder
 
-echo "script started execution at $(date +"%F %T") | tee -a $log_file
+echo "Script started execution at $(date +"%F %T")" &>> $logs_file
 
 validate(){
     if [ $1 -ne 0 ]; then
-       echo -e "$2..${R}FAILED${N}" | tee -a $log_file
-       exit 1
+        echo -e "${2}..${R}FAILED${N}" | tee -a $logs_file
+        exit 1
     else
-       echo -e "$2..${G}SUCCESS${N}" | tee -a $log_file
+        echo -e "${2}..${G}SUCCESS${N}" | tee -a $logs_file
     fi
 }
 
-#starting mongodb installation
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
-validate $? "adding mongo to repo"
+validate $? "Adding mongo repo"
 
-dnf install mongodb-org -y &>> $log_file
-validate $? "installing mongodb"
+dnf install mongodb-org -y &>> $logs_file
+validate $? "Install MongDB"
 
-systemctl enable mongod &>> $log_file
-validate $? "enabiling mongodb"
-
-systemctl start mongod &>> $log_file
-validate $? "starting mongodb"
+systemctl enable mongod &>> $logs_file
+systemctl start mongod &>> $logs_file
+validate $? "Enable and start MongoDB"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-validate $? "updating remote connections to mongodb"
+validate $? "Updating remote connections to MongoDB"
 
-systemctl restart mongod &>> $log_file
-validate $? "restarting mongodb"
+systemctl restart mongod
+validate $? "Restarting MongoDB"
 
-echo "script ended at $(date +"%F %T") | tee -a $log_file
+echo "Script started execution at $(date +"%F %T")" &>> $logs_file
