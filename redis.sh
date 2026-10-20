@@ -9,7 +9,7 @@ Y="\e[33m"
 N="\e[0m"
 
 #checking user is having sudo access
-if [ $user_id -ne 0]; then
+if [ $user_id -ne 0 ]; then
    echo "user $USER is not having sudo sccess"
    exit 1
 fi
@@ -17,7 +17,7 @@ fi
 mkdir -p $logs_folder
 
 validate(){
-    if [$1 -ne 0 ]; then
+    if [ $1 -ne 0 ]; then
        echo -e "$2..${R}FAILED${N}" | tee -a $logs_file
     else
        echo -e "$2..${G}SUCCESS${N}" | tee -a $logs_file
