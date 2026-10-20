@@ -13,6 +13,8 @@ if [ $user_id -ne 0 ]; then
    echo "user $USER is not having sudo access"
 fi
 
+mkdir -p $logs_folder
+
 validate(){
     if [ $1 -ne 0 ]; then
        echo "$2..${R}FAILED${N}" | tee -a $logs_file
