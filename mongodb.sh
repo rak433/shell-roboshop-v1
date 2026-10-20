@@ -27,7 +27,7 @@ echo "script execution started at $(date +"%F %T")"
 
 #installing mongodb
 
-cp mongodb.repo /etc/yum.repos.d/mongodb.repo
+cp mongo.repo /etc/yum.repos.d/mongo.repo
 validate $? "creating repo for mongodb"
 
 dnf install mongodb-org -y &>> $logs_file
