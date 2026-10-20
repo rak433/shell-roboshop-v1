@@ -42,7 +42,7 @@ validate $? "start mongodb"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 validate $? "updating remote connections to mongodb"
 
-systemctl restart mongod
+systemctl restart mongod &>> $logs_file
 validate $? "restarting mongodb"
 
 echo "script execution ended at $(date +"%F %T")"
