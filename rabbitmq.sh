@@ -9,7 +9,7 @@ Y="\e[33m"
 N="\e[0m"
 
 #checking users sudo access
-if [ $user_id -ne 0 ]; then
+if [ ${user_id} -ne 0 ]; then
    echo "user $USER is not having sudo access"
    exit 1
 fi
@@ -46,7 +46,7 @@ if [ $? -ne 0 ]; then
    validate $? "adding roboshop user"
 else
    echo "rabbitmq user alerady exist ${Y}SKIPPING${N}"
-
+fi
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> logs_file
 validate $? "setting permission for roboshop user"
 
