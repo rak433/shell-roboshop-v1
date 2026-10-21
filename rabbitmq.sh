@@ -45,7 +45,7 @@ if [ $? -ne 0 ]; then
    rabbitmqctl add_user roboshop roboshop123 &>> logs_file
    validate $? "adding roboshop user"
 else
-   echo "rabbitmq user alerady exist ${Y}SKIPPING${N}"
+   echo -e "rabbitmq user alerady exist ${Y}SKIPPING${N}"
 fi
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> logs_file
 validate $? "setting permission for roboshop user"
