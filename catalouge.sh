@@ -55,27 +55,27 @@ validate $? "removing files under app directory"
 mkdir -p /app &>> $logs_file
 validate $? "creating app directorey"
 
-curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip &>>logs_folder
+curl -L -o /tmp/catalouge.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip &>>logs_folder
 validate $? "downloading catalouge"
 
 cd /app
-unzip /tmp/catalogue.zip &>> $logs_file
+unzip /tmp/catalouge.zip &>> $logs_file
 validate $? "unzipping catalouge"
 
 npm install &>> $logs_file
 validate $? "installing dependencies"
 
-sed -i "s/DOMAIN_NAME/$domain_name/g" "$script_dir/catalogue.service"
-cp "$script_dir/catalogue.service" /etc/systemd/system/catalogue.service
+sed -i "s/DOMAIN_NAME/$domain_name/g" "$script_dir/catalouge.service"
+cp "$script_dir/catalouge.service" /etc/systemd/system/catalouge.service
 
 systemctl daemon-reload &>> $logs_file
 validate $? "reloading demon"
 
-systemctl enable catalogue &>> $logs_file
-validate $? "enable catalogue"
+systemctl enable catalouge &>> $logs_file
+validate $? "enable catalouge"
 
-systemctl start catalogue &>> $logs_file
-validate $? "starting catalogue"
+systemctl start catalouge &>> $logs_file
+validate $? "starting catalouge"
 
 cp "$script_dir/mongo.repo" /etc/yum.repos.d/mongo.repo
 validate $? "adding mngodb to repo"
@@ -83,7 +83,7 @@ validate $? "adding mngodb to repo"
 dnf install mongodb-mongosh -y &>> $logs_file
 validate $? "downloading mongodb client"
 
-product_count=$(mongosh --host "mongodb.$domain_name" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()' 2>> $logs_file)
+product_count=$(mongosh --host "mongodb.$domain_name" --quiet --eval 'db.getSiblingDB("catalouge").products.countDocuments()' 2>> $logs_file)
 valiadte $? "connecting to mongodb"
 
 if [ "$product_count" -eq 0 ]; then
