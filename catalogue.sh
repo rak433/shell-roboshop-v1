@@ -66,16 +66,16 @@ npm install &>> $logs_file
 validate $? "installing dependencies"
 
 sed -i "s/DOMAIN_NAME/$domain_name/g" "$script_dir/catalogue.service"
-cp "$script_dir/catalouge.service" /etc/systemd/system/catalouge.service
+cp "$script_dir/catalogue.service" /etc/systemd/system/catalogue.service
 
 systemctl daemon-reload &>> $logs_file
 validate $? "reloading demon"
 
-systemctl enable catalouge &>> $logs_file
-validate $? "enable catalouge"
+systemctl enable catalogue &>> $logs_file
+validate $? "enable catalogue"
 
-systemctl start catalouge &>> $logs_file
-validate $? "starting catalouge"
+systemctl start catalogue &>> $logs_file
+validate $? "starting catalogue"
 
 cp "$script_dir/mongo.repo" /etc/yum.repos.d/mongo.repo
 validate $? "adding mngodb to repo"
