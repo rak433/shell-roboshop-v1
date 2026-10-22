@@ -47,7 +47,7 @@ source /etc/profile.d/java.sh
 echo $JAVA_HOME
 validate $? "Setting JAVA_HOME for maven"
 
-id -roboshop &>> $logs_file
+id roboshop &>> $logs_file
 if [ $? -ne 0 ]; then
    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $logs_file
    validate $? "creating system user"
